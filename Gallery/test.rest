@@ -1,0 +1,66 @@
+### ===============================
+### 1. REGISTER USER
+### ===============================
+POST http://127.0.0.1:8000/register/
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "password": "password123"
+}
+
+###
+
+### ===============================
+### 2. LOGIN USER (SimpleJWT)
+### ===============================
+POST http://127.0.0.1:8000/login/
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "password123"
+}
+
+###
+
+# After running login,
+# copy the "access" token from the response
+# and paste it here
+
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY3NTY1NjU1LCJpYXQiOjE3Njc1NjUzNTUsImp0aSI6ImY5NDg5MGY5Y2NmZDQ0MDA4ZmQ3MTMxNjVhMWQ1ZTk0IiwidXNlcl9pZCI6IjEifQ.h8cysVaap-2K3wnGchWqJN0szjLnpJpeKebXiidow1I
+
+###
+
+### ===============================
+### 3. ACCESS PROTECTED PROFILE
+### ===============================
+GET http://127.0.0.1:8000/profile/
+Authorization: Bearer {{accessToken}}
+
+###
+
+### ===============================
+### 4. UPLOAD IMAGE
+### ===============================
+POST http://127.0.0.1:8000/upload/
+Authorization: Bearer {{accessToken}}
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="title"
+
+My First Image
+--boundary
+Content-Disposition: form-data; name="image"; filename="test.jpg"
+Content-Type: image/jpeg
+
+< ./Screenshot_20251001_162408_Pinterest.jpg
+--boundary--
+
+
+"{
+  "id": "685b2b1f-8998-48ae-9032-7c10d3c5dfc0",
+  "path": "images/1/685b2b1f-8998-48ae-9032-7c10d3c5dfc0.jpg"
+}"

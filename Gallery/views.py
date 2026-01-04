@@ -42,9 +42,9 @@ class UploadImageView(APIView):
         image.storage_path = path
         image.save()
         
-        return Response(f'{
+        return Response({
             "id": str(image.id),
-            "path": image.storage_path}, status= 201')
+            "path": image.storage_path}, status= 201)
         
         
 # class ReminderList(generics.ListCreateAPIView):
