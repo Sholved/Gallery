@@ -19,8 +19,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 
-class ReminderSerializer(serializers.Serializer):
+class ImageSerializer(serializers.ModelSerializer):
     class Meta():
-        fields = ['title','date','location','repeat',]
+        fields = ['title','id','storage_path','created_at']
+        
+        read_only_fields = ['id','storage_path', 'created_at']
         
     
