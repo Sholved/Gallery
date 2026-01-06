@@ -1,13 +1,15 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from rest_framework import permissions
 from rest_framework.exceptions import PermissionDenied
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from .serializers import RegisterSerializer, ImageSerializer
 from .models import Image
-from .upload import upload_image
+from .upload import upload_image, delete_image
+from .permissions import PublicReadOnly
 
 User = get_user_model()
 
@@ -54,10 +56,34 @@ class UploadImageView(APIView):
         
 class ImageViewSet(ModelViewSet):
     serializer_class = ImageSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, PublicReadOnly]
     
     def get_queryset(self):
-        return Image.objects.filter(owner=self.request.user)
+        user = self.request.user
+        return Image.objects.filter(
+            Q(owner=user) | Q(is_public = True)
+        )  
     
     def perform_create(self, serializer):
         raise PermissionDenied("Use the upload endpoint to uplod images")
+    
+    def destroy(self, request, *args, **kwargs):
+        image = self.get_object()
+        
+        if image.storage_path:
+            delete_image(image.storage_path)
+            
+        image.delete()
+        return Response(
+            {"messages": "Image deleted successfully"}, 
+            status= status.HTTP_204_NO_CONTENT
+        )
+        
+class PublicImageView(ListAPIView):
+    serializer_class = ImageSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        return Image.objects.filter(is_public = True)
+    
+    

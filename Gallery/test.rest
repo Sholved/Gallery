@@ -1,6 +1,6 @@
-### ===============================
-### 1. REGISTER USER
-### ===============================
+### =====================================================
+### OPTIONAL: REGISTER USER (RUN ONLY ONCE)
+### =====================================================
 POST http://127.0.0.1:8000/register/
 Content-Type: application/json
 
@@ -12,9 +12,9 @@ Content-Type: application/json
 
 ###
 
-### ===============================
-### 2. LOGIN USER (SimpleJWT)
-### ===============================
+### =====================================================
+### LOGIN USER (SimpleJWT)
+### =====================================================
 POST http://127.0.0.1:8000/login/
 Content-Type: application/json
 
@@ -25,25 +25,24 @@ Content-Type: application/json
 
 ###
 
-# After running login,
-# copy the "access" token from the response
-# and paste it here
+# After login response,
+# copy the "access" token value and paste it below
 
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY3NTY1NjU1LCJpYXQiOjE3Njc1NjUzNTUsImp0aSI6ImY5NDg5MGY5Y2NmZDQ0MDA4ZmQ3MTMxNjVhMWQ1ZTk0IiwidXNlcl9pZCI6IjEifQ.h8cysVaap-2K3wnGchWqJN0szjLnpJpeKebXiidow1I
+@accessToken = PASTE_ACCESS_TOKEN_HERE
 
 ###
 
-### ===============================
-### 3. ACCESS PROTECTED PROFILE
-### ===============================
+### =====================================================
+### ACCESS PROTECTED PROFILE
+### =====================================================
 GET http://127.0.0.1:8000/profile/
 Authorization: Bearer {{accessToken}}
 
 ###
 
-### ===============================
-### 4. UPLOAD IMAGE
-### ===============================
+### =====================================================
+### UPLOAD IMAGE
+### =====================================================
 POST http://127.0.0.1:8000/upload/
 Authorization: Bearer {{accessToken}}
 Content-Type: multipart/form-data; boundary=boundary
@@ -59,8 +58,68 @@ Content-Type: image/jpeg
 < ./Screenshot_20251001_162408_Pinterest.jpg
 --boundary--
 
+###
 
-"{
-  "id": "685b2b1f-8998-48ae-9032-7c10d3c5dfc0",
-  "path": "images/1/685b2b1f-8998-48ae-9032-7c10d3c5dfc0.jpg"
-}"
+# Copy the "id" from the upload response and paste below
+
+@imageId = PASTE_IMAGE_ID_HERE
+
+###
+
+### =====================================================
+### LIST MY IMAGES
+### =====================================================
+GET http://127.0.0.1:8000/images/
+Authorization: Bearer {{accessToken}}
+
+###
+
+### =====================================================
+### GET SINGLE IMAGE (OWNER ACCESS)
+### =====================================================
+GET http://127.0.0.1:8000/images/{{imageId}}/
+Authorization: Bearer {{accessToken}}
+
+###
+
+### =====================================================
+### MAKE IMAGE PUBLIC
+### =====================================================
+PATCH http://127.0.0.1:8000/images/{{imageId}}/
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "is_public": true
+}
+
+###
+
+### =====================================================
+### LIST IMAGES AGAIN (CONFIRM VISIBILITY)
+### =====================================================
+GET http://127.0.0.1:8000/images/
+Authorization: Bearer {{accessToken}}
+
+###
+
+### =====================================================
+### LIST PUBLIC IMAGES (NO AUTH)
+### =====================================================
+GET http://127.0.0.1:8000/public-images/
+
+###
+
+### =====================================================
+### DELETE IMAGE (OWNER DELETE)
+### =====================================================
+DELETE http://127.0.0.1:8000/images/{{imageId}}/
+Authorization: Bearer {{accessToken}}
+
+###
+
+### =====================================================
+### CONFIRM IMAGE DELETION
+### =====================================================
+GET http://127.0.0.1:8000/images/
+Authorization: Bearer {{accessToken}}

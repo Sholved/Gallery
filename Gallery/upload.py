@@ -12,3 +12,8 @@ def upload_image(file, user, image_id):
     )
     
     return path
+
+def delete_image(path:str):
+        supabase.storage.from_("images").remove([path])
+        
+        
