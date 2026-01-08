@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from .models import Image
 
 User = get_user_model()
 
@@ -21,6 +22,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class ImageSerializer(serializers.ModelSerializer):
     class Meta():
+        model = Image
         fields = ['title','id','storage_path','created_at']
         
         read_only_fields = ['id','storage_path', 'created_at']
