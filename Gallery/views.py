@@ -6,10 +6,10 @@ from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
-from .serializers import RegisterSerializer, ImageSerializer
-from .models import Image
+from .serializers import RegisterSerializer, ImageSerializer, AlbumSerializer
+from .models import Image, Album
 from .upload import upload_image, delete_image
-from .permissions import PublicReadOnly
+from .permissions import PublicReadOnly, IsOwner
 
 User = get_user_model()
 
@@ -86,4 +86,27 @@ class PublicImageView(ListAPIView):
     def get_queryset(self):
         return Image.objects.filter(is_public = True)
     
+class AlbumView(ModelViewSet):
+    serializer_class = AlbumSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
     
+    def get_queryset(self):
+        user = self.request.user
+        
+        if user.action == "list":
+            return Album.objects.filter(owner = user)
+        return Album.objects.filter(owner = user)
+    
+    def perform_create(self, serializer):
+        serializer.save(owner = self.request.owner)
+        
+    def perform_update(self, serializer):
+        album = self.get_object()
+        
+        images = serializer.validated_data.get("images", [])
+        
+        for image in images:
+            if image.owner != self.requested.owner:
+                raise PermissionDenied("You can only add your images")
+            
+        serializer.save()

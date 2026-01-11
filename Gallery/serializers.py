@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import Image
+from .models import Image, Album
 
 User = get_user_model()
 
@@ -27,4 +27,16 @@ class ImageSerializer(serializers.ModelSerializer):
         
         read_only_fields = ['id','storage_path', 'created_at']
         
+        
+class AlbumSerializer(serializers.ModelSerializer):
+    images = serializers.PrimaryKeyRelatedField(
+        many = True,
+        queryset = Image.objects.all(),
+        required=False
+    )
+    
+    class Meta:
+        model = Album
+        fields = ["id", "title", "description", "is_public","images", "created_at"]
+        read_only_fields = ["id", "created_at"]
     
