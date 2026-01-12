@@ -7,7 +7,7 @@ router = DefaultRouter()
 router.register("images", ImageViewSet, basename = "images")
 
 routers = DefaultRouter()
-router.register("albums", AlbumView.as_view(), basename="album")
+router.register("albums", AlbumView, basename="album")
 
 urlpatterns = [
     path('register/',RegisterUser.as_view(), name = 'register'),

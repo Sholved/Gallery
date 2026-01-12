@@ -28,8 +28,7 @@ Content-Type: application/json
 # After login response,
 # copy the "access" token value and paste it below
 
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY3NzIzMTg5LCJpYXQiOjE3Njc3MjI4ODksImp0aSI6IjE2YTQyM2RmNjgzZTRmMzc5OWYyYWQxZWUyMjJkODUyIiwidXNlcl9pZCI6IjEifQ.gZoh533ys78TYnYRla6B-_uDdxp7JGzk79c8BYTbDM8
-
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2ODMzMDc2NSwiaWF0IjoxNzY4MjQ0MzY1LCJqdGkiOiJmYWM1NTY1MTE0YzY0MzU0YmI5ZTc5OWQ4ZTAyMDJlNSIsInVzZXJfaWQiOiIxIn0.LaCZRBuCxIS6dg_FLQQYuB-u_Y6I9uC5kHi7hcYjPSM
 ###
 
 ### =====================================================
@@ -55,7 +54,7 @@ My First Image
 Content-Disposition: form-data; name="image"; filename="test.jpg"
 Content-Type: image/jpeg
 
-< ./Screenshot_20251001_162408_Pinterest.jpg
+< ./Screenshot_20251001_171313_Gallery.
 --boundary--
 
 ###
@@ -77,7 +76,7 @@ Authorization: Bearer {{accessToken}}
 ### =====================================================
 ### GET SINGLE IMAGE (OWNER ACCESS)
 ### =====================================================
-GET http://127.0.0.1:8000/images/{{imageId}}/
+GET http://127.0.0.1:8000/images/f3ec8675-5ac3-43b4-ba16-f183fddbe7a0/
 Authorization: Bearer {{accessToken}}
 
 ###
@@ -85,7 +84,7 @@ Authorization: Bearer {{accessToken}}
 ### =====================================================
 ### MAKE IMAGE PUBLIC
 ### =====================================================
-PATCH http://127.0.0.1:8000/images/{{imageId}}/
+PATCH http://127.0.0.1:8000/images/f3ec8675-5ac3-43b4-ba16-f183fddbe7a0/
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
@@ -108,12 +107,14 @@ Authorization: Bearer {{accessToken}}
 ### =====================================================
 GET http://127.0.0.1:8000/public-images/
 
+
+
 ###
 
 ### =====================================================
 ### DELETE IMAGE (OWNER DELETE)
 ### =====================================================
-DELETE http://127.0.0.1:8000/images/{{imageId}}/
+DELETE http://127.0.0.1:8000/images/acff31cf-165d-4dc5-8255-826342248640/
 Authorization: Bearer {{accessToken}}
 
 ###

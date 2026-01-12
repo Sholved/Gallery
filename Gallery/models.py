@@ -26,12 +26,12 @@ class Album(models.Model):
         )
     title = models.CharField(max_length=255)
     description = models.TextField(blank = True)
-    images = models.ManyToManyField("images", related_name="albums", blank = True
+    images = models.ManyToManyField("Image", related_name="albums", blank = True
                                     )
 
 is_public = models.BooleanField(default=False)
 
-created_at = models.DateTimeField(autoS_now_add = True)
+created_at = models.DateTimeField(auto_now_add = True)
 
 def __str__(self):
     return f"{self.title} ({self.owner})"
