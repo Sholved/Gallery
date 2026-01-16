@@ -70,6 +70,9 @@ class ImageViewSet(ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         image = self.get_object()
         
+        if image.owner != request.user:
+            raise PermissionDenied("You cannot delete this image")
+        
         if image.storage_path:
             delete_image(image.storage_path)
             
@@ -81,7 +84,7 @@ class ImageViewSet(ModelViewSet):
         
 class PublicImageView(ListAPIView):
     serializer_class = ImageSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     
     def get_queryset(self):
         return Image.objects.filter(is_public = True)

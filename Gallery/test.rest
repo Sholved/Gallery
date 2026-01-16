@@ -28,7 +28,7 @@ Content-Type: application/json
 # After login response,
 # copy the "access" token value and paste it below
 
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2ODMzMDc2NSwiaWF0IjoxNzY4MjQ0MzY1LCJqdGkiOiJmYWM1NTY1MTE0YzY0MzU0YmI5ZTc5OWQ4ZTAyMDJlNSIsInVzZXJfaWQiOiIxIn0.LaCZRBuCxIS6dg_FLQQYuB-u_Y6I9uC5kHi7hcYjPSM
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NTc0NzEzLCJpYXQiOjE3Njg1NzQ0MTMsImp0aSI6IjlkOThkYWFkMTBhNDQ4NTk5YTk1ZmMxMzdkNTA4NmM1IiwidXNlcl9pZCI6IjEifQ.qlpF8cE93uwPLHTTFa_3tt0ht-5NVimtKTZSh10TQL8
 ###
 
 ### =====================================================
@@ -84,7 +84,7 @@ Authorization: Bearer {{accessToken}}
 ### =====================================================
 ### MAKE IMAGE PUBLIC
 ### =====================================================
-PATCH http://127.0.0.1:8000/images/f3ec8675-5ac3-43b4-ba16-f183fddbe7a0/
+PATCH http://127.0.0.1:8000/images/160bc04e-f8be-4caf-bdb3-51ef3dda2544/
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
@@ -106,7 +106,6 @@ Authorization: Bearer {{accessToken}}
 ### LIST PUBLIC IMAGES (NO AUTH)
 ### =====================================================
 GET http://127.0.0.1:8000/public-images/
-
 
 
 ###

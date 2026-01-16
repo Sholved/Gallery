@@ -26,8 +26,7 @@ class Album(models.Model):
         )
     title = models.CharField(max_length=255)
     description = models.TextField(blank = True)
-    images = models.ManyToManyField("Image", related_name="albums", blank = True
-                                    )
+    images = models.ManyToManyField("Image", related_name="albums", blank = True)
 
 is_public = models.BooleanField(default=False)
 

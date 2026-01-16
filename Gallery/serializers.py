@@ -23,7 +23,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 class ImageSerializer(serializers.ModelSerializer):
     class Meta():
         model = Image
-        fields = ['title','id','storage_path','created_at']
+        fields = ['title','id','storage_path','created_at', 'is_public']
         
         read_only_fields = ['id','storage_path', 'created_at']
         
