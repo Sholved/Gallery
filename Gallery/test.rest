@@ -5,8 +5,8 @@ POST http://127.0.0.1:8000/register/
 Content-Type: application/json
 
 {
-  "username": "testuser",
-  "email": "testuser@example.com",
+  "username": "testuser2",
+  "email": "testuser2@example.com",
   "password": "password123"
 }
 
@@ -28,8 +28,7 @@ Content-Type: application/json
 # After login response,
 # copy the "access" token value and paste it below
 
-@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NTc0NzEzLCJpYXQiOjE3Njg1NzQ0MTMsImp0aSI6IjlkOThkYWFkMTBhNDQ4NTk5YTk1ZmMxMzdkNTA4NmM1IiwidXNlcl9pZCI6IjEifQ.qlpF8cE93uwPLHTTFa_3tt0ht-5NVimtKTZSh10TQL8
-###
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY4NjY5NTcxLCJpYXQiOjE3Njg2NjkyNzEsImp0aSI6IjFiZmJkZDIzM2RiNDQwODJhNzYyMWQ5YjM2OTNmYTE0IiwidXNlcl9pZCI6IjEifQ.6MvBd8D8d7PiUbichyDB6l7fnrnF-2Qcw3gljn_8TRU
 
 ### =====================================================
 ### ACCESS PROTECTED PROFILE
@@ -76,7 +75,7 @@ Authorization: Bearer {{accessToken}}
 ### =====================================================
 ### GET SINGLE IMAGE (OWNER ACCESS)
 ### =====================================================
-GET http://127.0.0.1:8000/images/f3ec8675-5ac3-43b4-ba16-f183fddbe7a0/
+GET http://127.0.0.1:8000/images/76670864-318c-48bb-9f2a-1e46e9193b17/
 Authorization: Bearer {{accessToken}}
 
 ###

@@ -28,12 +28,12 @@ class Album(models.Model):
     description = models.TextField(blank = True)
     images = models.ManyToManyField("Image", related_name="albums", blank = True)
 
-is_public = models.BooleanField(default=False)
+    is_public = models.BooleanField(default=False)
 
-created_at = models.DateTimeField(auto_now_add = True)
+    created_at = models.DateTimeField(auto_now_add = True)
 
-def __str__(self):
-    return f"{self.title} ({self.owner})"
+    def __str__(self):
+         return f"{self.title} ({self.owner})"
 
     
 "https://dtiqleetduadxhqemuby.supabase.co"
