@@ -95,21 +95,18 @@ class AlbumView(ModelViewSet):
     
     def get_queryset(self):
         user = self.request.user
-        
-        if user.action == "list":
-            return Album.objects.filter(owner = user)
-        return Album.objects.filter(owner = user)
+        return Album.objects.filter(owner = self.request.user)
     
     def perform_create(self, serializer):
-        serializer.save(owner = self.request.owner)
+        serializer.save(owner = self.request.user)
         
     def perform_update(self, serializer):
-        album = self.get_object()
         
-        images = serializer.validated_data.get("images", [])
+        if "images" in serializer.validated_data:
+            images = serializer.validated_data["images"]
         
-        for image in images:
-            if image.owner != self.requested.owner:
-                raise PermissionDenied("You can only add your images")
-            
+            for image in images:
+                if image.owner != self.request.user:
+                    raise PermissionDenied("You can only add your images")
+                
         serializer.save()
