@@ -1,0 +1,12 @@
+
+# Remove pycache files
+*__pycache__/
+
+#Remove the venv folder
+venv/
+
+#remove the .env folder if theres any or one is added later
+.env
+
+#You might wanna remove the .rest file too if it contains sensitive info like valid jwt tokens
+#*.rest #uncomment to add
