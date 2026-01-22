@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import get_user_model
 from .models import Image, Album
 
@@ -40,3 +41,27 @@ class AlbumSerializer(serializers.ModelSerializer):
         fields = ["id", "title", "description", "is_public","images", "created_at"]
         read_only_fields = ["id", "created_at"]
     
+    
+    class AlbumSerializer(serializers.ModelSerializer): 
+        images = serializers.PrimaryKeyRelatedField(
+            many = True,
+            queryset = Image.objects.all(),
+            required=False
+        )
+    
+    class Meta:
+        model = Album
+        fields = ["id", "title", "description", "is_public","images", "created_at"]
+        read_only_fields = ["id", "created_at"]
+    
+    
+    def validate(self, images):
+        request = self.context.get("request")
+        images = images.get("images", [])
+        
+        if request:
+            for image in images:
+                if image.owner != request.user:
+                    raise serializers.ValidationError("You do not have permission to add this image to the album.")
+                
+        return images
